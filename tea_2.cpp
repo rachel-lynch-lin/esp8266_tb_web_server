@@ -124,6 +124,7 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
+              client.println("<p class='button'>Brewing!</p>");
               for (int brewTime = 10; brewTime > 0; brewTime--)
               {
                 // count down the brew time in seconds
@@ -131,6 +132,7 @@ void loop()
                 delay(1000);
               }
               outputBState = "off";
+              client.println("<p class='button'>Finished!</p>");
             }
             else if (header.indexOf("GET /black/off") >= 0)
             {
