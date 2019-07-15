@@ -91,14 +91,11 @@ void loop()
             client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
             client.println("<link rel=\"icon\" href=\"data:,\">");
             client.println("<link href=\"https://fonts.googleapis.com/css?family=Indie+Flower|Permanent+Marker&display=swap\" rel=\"stylesheet\">");
-
             // CSS to style the on/off buttons
             // Feel free to change the background-color and font-size attributes to fit your preferences
-            client.println("<style>html {font-family: 'Indie Flower', cursive; display: inline-block; margin: 0px auto; text-align: center; background-color: #eee;}");
             client.println("<style>html {font-family: 'Indie Flower', cursive; display: inline-block; margin: 0px auto; text-align: center; background-color: rgba(255, 111, 0, 0.5);}");
             // Button Class
             client.println("button {border: none; color: white; padding: 16px 40px; font-family: 'Permanent Marker', cursive;");
-            client.println("text-decoration: none; font-size: 20px; margin: 2px; cursor: pointer;}</style></head>");
             client.println("text-decoration: none; font-size: 20px; margin: 2px; cursor: pointer;}");
             // Black Tea Buttons
             client.println("#blackOn {background-color: #cf1a11;}");
@@ -115,7 +112,6 @@ void loop()
             // Exit Button
             client.println("#exitOn {background-color: #ccc;}");
             client.println("#exitOff {background-color: #eee;}</style></head>");
-
             // Web Page Heading
             client.println("<body><h1>T^2 - Tea Brewing Made Easy</h1>");
             if (header.indexOf("GET /black/on") >= 0)
@@ -207,73 +203,75 @@ void loop()
                 delay(5);
               }
             }
+
+            if (header.indexOf("GET /exit/on") >= 0)
+            {
+              outputState = "on";
+            }
+            else if (header.indexOf("GET /exit/off") >= 0)
+            {
+              outputState = "off";
+              outputWState = "off";
+              outputBState = "off";
+              outputGState = "off";
+              outputHState = "off";
+            }
+
             // Display current state, and ON/OFF buttons for black tea
             client.println("<p>Black Tea - State " + outputBState + "</p>");
             // If the outputBState is off, it displays the ON button
             if (outputBState == "off")
             {
-              client.println("<p><a href=\"/black/on\"><button class=\"button\">BREW</button></a></p>");
               client.println("<p><a href=\"/black/on\"><button class=\"button\" id=\"blackOn\">BREW</button></a></p>");
             }
             else
             {
-              client.println("<p><a href=\"/black/off\"><button class=\"button\">BREWING</button></a></p>");
               client.println("<p><a href=\"/black/off\"><button class=\"button\" id=\"blackOff\">BREWING</button></a></p>");
             }
-
             client.println("<p>Green Tea State " + outputGState + "</p>");
             // If the outputGState is off, it displays the ON button
             if (outputGState == "off")
             {
-              client.println("<p><a href=\"/green/on\"><button class=\"button\">BREW</button></a></p>");
               client.println("<p><a href=\"/green/on\"><button class=\"button\" id=\"greenOn\">BREW</button></a></p>");
             }
             else
             {
-              client.println("<p><a href=\"/green/off\"><button class=\"button\">BREWING</button></a></p>");
               client.println("<p><a href=\"/green/off\"><button class=\"button\" id=\"greenOff\">BREWING</button></a></p>");
             }
-
             // Display current state, and ON/OFF buttons for white tea
             client.println("<p>White Tea - State " + outputWState + "</p>");
             // If the outputWState is off, it displays the ON button
             if (outputWState == "off")
             {
-              client.println("<p><a href=\"/white/on\"><button class=\"button\">BREW</button></a></p>");
               client.println("<p><a href=\"/white/on\"><button class=\"button\" id=\"whiteOn\">BREW</button></a></p>");
             }
             else
             {
-              client.println("<p><a href=\"/white/off\"><button class=\"button\">BREWING</button></a></p>");
               client.println("<p><a href=\"/white/off\"><button class=\"button\" id=\"whiteOff\">BREWING</button></a></p>");
             }
-
             // Display current state, and ON/OFF buttons for white tea
             client.println("<p>Herbal Tea - State " + outputHState + "</p>");
             // If the outputHState is off, it displays the ON button
             if (outputHState == "off")
             {
-              client.println("<p><a href=\"/herbal/on\"><button class=\"button\">BREW</button></a></p>");
               client.println("<p><a href=\"/herbal/on\"><button class=\"button\" id=\"herbalOn\">BREW</button></a></p>");
             }
             else
             {
-              client.println("<p><a href=\"/herbal/off\"><button class=\"button\">BREWING</button></a></p>");
               client.println("<p><a href=\"/herbal/off\"><button class=\"button\" id=\"herbalOff\">BREWING</button></a></p>");
             }
-
             // Display current state, and ON/OFF buttons for exit button
             client.println("<p>Exit Button - State " + outputState + "</p>");
             // If the outputState is off, it displays the ON button
             if (outputState == "off")
             {
-              client.println("<p><a href=\"/exit/on\"><button class=\"button\">EXIT</button></a></p>");
               client.println("<p><a href=\"/exit/on\"><button class=\"button\" id=\"exitOn\">EXIT</button></a></p>");
+              client.println("<p><a href=\"/exit/on\"><button class=\"button\" id=\"exitOn\">CANCEL</button></a></p>");
             }
             else
             {
-              client.println("<p><a href=\"/exit/off\"><button class=\"button\">EXIT</button></a></p>");
               client.println("<p><a href=\"/exit/off\"><button class=\"button\" id=\"exitOff\">EXIT</button></a></p>");
+              client.println("<p><a href=\"/exit/off\"><button class=\"button\" id=\"exitOff\">RESET</button></a></p>");
             }
 
             client.println("</body></html>");
