@@ -4,44 +4,33 @@ String local = "local";
 // Replace with your network credentials
 const char *ssid = "";
 const char *password = "";
-
 // Set web server port number to 80
 WiFiServer server(80);
-
 // Variable to store the HTTP request
 String header;
-
 // Load Servo Library
 #include <Servo.h>
-
 // variables for the servo
 Servo servo;
 int angle = 70;
-
 // Auxiliar variables to store the current output state
 String outputState = "off";
 String outputWState = "off";
 String outputBState = "off";
 String outputGState = "off";
 String outputHState = "off";
-
 // Assign output variables to GPIO pins
 const int led = 16; // D0
-
 void setup()
 {
   Serial.begin(9600);
-
   // Initialize the LED pin as an output:
   pinMode(led, OUTPUT);
-
   // Set outputs to HIGH which is off for the built in LED
   digitalWrite(led, LOW);
-
   // Initialize both the pin and motor for both servos:
   servo.attach(2); // D4
   servo.write(angle);
-
   // Connect to Wi-Fi network with SSID and password
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -51,7 +40,6 @@ void setup()
     delay(500);
     Serial.print(".");
   }
-
   // Print local IP address and start web server
   Serial.println("");
   Serial.println("WiFi connected.");
@@ -59,7 +47,6 @@ void setup()
   Serial.println(WiFi.localIP());
   server.begin();
 }
-
 void loop()
 {
   WiFiClient client = server.available();
@@ -86,7 +73,6 @@ void loop()
             client.println("Content-type:text/html");
             client.println("Connection: close");
             client.println();
-
             // Blink LED to show it is starting
             digitalWrite(led, LOW);
             delay(100);
@@ -100,22 +86,23 @@ void loop()
             delay(100);
             digitalWrite(led, HIGH);
             delay(100);
-
             // Display the HTML web page
             client.println("<!DOCTYPE html><html>");
             client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
             client.println("<link rel=\"icon\" href=\"data:,\">");
+            client.println("<link href=\"https://fonts.googleapis.com/css?family=Indie+Flower|Permanent+Marker&display=swap\" rel=\"stylesheet\">");
 
             // CSS to style the on/off buttons
             // Feel free to change the background-color and font-size attributes to fit your preferences
             client.println("<style>html {font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center; background-color: #eee;}");
+            client.println("<style>html {font-family: 'Indie Flower', cursive; display: inline-block; margin: 0px auto; text-align: center; background-color: #eee;}");
             // Button Class
             client.println("button {border: none; color: white; padding: 16px 40px;");
+            client.println("button {border: none; color: white; padding: 16px 40px; font-family: 'Permanent Marker', cursive;");
             client.println("text-decoration: none; font-size: 20px; margin: 2px; cursor: pointer;}</style></head>");
 
             // Web Page Heading
             client.println("<body><h1>T^2 - Tea Brewing Made Easy</h1>");
-
             if (header.indexOf("GET /black/on") >= 0)
             {
               outputBState = "on";
@@ -138,7 +125,6 @@ void loop()
                 delay(5);
               }
             }
-
             // Green Tea
             if (header.indexOf("GET /green/on") >= 0)
             {
@@ -162,7 +148,6 @@ void loop()
                 delay(5);
               }
             }
-
             if (header.indexOf("GET /white/on") >= 0)
             {
               outputWState = "on";
@@ -185,7 +170,6 @@ void loop()
                 delay(5);
               }
             }
-
             if (header.indexOf("GET /herbal/on") >= 0)
             {
               outputHState = "on";
@@ -208,7 +192,6 @@ void loop()
                 delay(5);
               }
             }
-
             // Display current state, and ON/OFF buttons for black tea
             client.println("<p>Black Tea - State " + outputBState + "</p>");
             // If the outputBState is off, it displays the ON button
@@ -220,7 +203,6 @@ void loop()
             {
               client.println("<p><a href=\"/black/off\"><button class=\"button\">BREWING</button></a></p>");
             }
-
             client.println("<p>Green Tea State " + outputGState + "</p>");
             // If the outputGState is off, it displays the ON button
             if (outputGState == "off")
@@ -231,7 +213,6 @@ void loop()
             {
               client.println("<p><a href=\"/green/off\"><button class=\"button\">BREWING</button></a></p>");
             }
-
             // Display current state, and ON/OFF buttons for white tea
             client.println("<p>White Tea - State " + outputWState + "</p>");
             // If the outputWState is off, it displays the ON button
@@ -243,7 +224,6 @@ void loop()
             {
               client.println("<p><a href=\"/white/off\"><button class=\"button\">BREWING</button></a></p>");
             }
-
             // Display current state, and ON/OFF buttons for white tea
             client.println("<p>Herbal Tea - State " + outputHState + "</p>");
             // If the outputHState is off, it displays the ON button
@@ -255,7 +235,6 @@ void loop()
             {
               client.println("<p><a href=\"/herbal/off\"><button class=\"button\">BREWING</button></a></p>");
             }
-
             // Display current state, and ON/OFF buttons for exit button
             client.println("<p>Exit Button - State " + outputState + "</p>");
             // If the outputState is off, it displays the ON button
@@ -267,9 +246,7 @@ void loop()
             {
               client.println("<p><a href=\"/exit/off\"><button class=\"button\">EXIT</button></a></p>");
             }
-
             client.println("</body></html>");
-
             // The HTTP response ends with another blank line
             client.println();
             // Break out of the while loop
