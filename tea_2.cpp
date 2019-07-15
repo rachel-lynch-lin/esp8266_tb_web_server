@@ -96,6 +96,9 @@ void loop()
             // Button Class
             client.println("button {border: none; color: white; padding: 16px 40px; font-family: 'Permanent Marker', cursive;");
             client.println("text-decoration: none; font-size: 20px; margin: 2px; cursor: pointer;}");
+            client.println("text-decoration: none; font-size: 25px; margin: 2px; cursor: pointer;}");
+            // Paragraph Class
+            client.println("p {font-size: 25px;}");
             // Black Tea Buttons
             client.println("#blackOn {background-color: #cf1a11;}");
             client.println("#blackOff {background-color: #cf4b44;}");
@@ -108,9 +111,12 @@ void loop()
             // Herbal Tea Button
             client.println("#herbalOn {background-color: #dde010;}");
             client.println("#herbalOff {background-color: #f8fa78;}</style></head>");
+
             // Web Page Heading
             client.println("<body><h1>T^2 - Tea Brewing Made Easy</h1>");
+            client.println("<body><h1>T<sup>2</sup> Tea Brewing Made Easy</h1>");
             // Recommended steep times from http://the.republicoftea.com/library/tea-101/how-to-steep-tea/
+
             if (header.indexOf("GET /black/on") >= 0)
             {
               outputBState = "on";
@@ -123,36 +129,33 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
-
               client.println("<p>Time remaining:</p>");
-              // Loop to print elapsed brew time. 5-7 minutes for herbal tea
-              for (int brewTime = 300; brewTime > 0; brewTime--)
-                // Loop to print elapsed brew time. 3-5 minutes for black tea
-                for (int brewTime = 180; brewTime > 0; brewTime--)
+              // Loop to print elapsed brew time. 3-5 minutes for black tea
+              for (int brewTime = 180; brewTime > 0; brewTime--)
+              {
+                // count down the brew time in minutes
+                double minutes = brewTime / 60;
+                // Change the type to a string
+                String minute = String(minutes);
+                // Only get the first number from the string (no decimals needed)
+                String newMinute = minute.substring(0, 1);
+                // count down the brew time in seconds
+                int seconds = brewTime % 60;
+                if (seconds % 30 == 0)
                 {
-                  // count down the brew time in minutes
-                  double minutes = brewTime / 60;
-                  // Change the type to a string
-                  String minute = String(minutes);
-                  // Only get the first number from the string (no decimals needed)
-                  String newMinute = minute.substring(0, 1);
-                  // count down the brew time in seconds
-                  int seconds = brewTime % 60;
-                  if (seconds % 30 == 0)
+                  if (seconds / 30 == 0)
                   {
-                    if (seconds / 30 == 0)
-                    {
-                      // add the second zero for better formatting
-                      client.println("<p>" + newMinute + ":" + seconds + "0 <p>");
-                    }
-                    else
-                    {
-                      // print without extra formatting
-                      client.println("<p>" + newMinute + ":" + seconds + "<p>");
-                    }
+                    // add the second zero for better formatting
+                    client.println("<p>" + newMinute + ":" + seconds + "0 <p>");
                   }
-                  delay(1000);
+                  else
+                  {
+                    // print without extra formatting
+                    client.println("<p>" + newMinute + ":" + seconds + "<p>");
+                  }
                 }
+                delay(1000);
+              }
               // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
@@ -177,36 +180,33 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
-
               client.println("<p>Time remaining:</p>");
-              // Loop to print elapsed brew time. 5-7 minutes for herbal tea
-              for (int brewTime = 300; brewTime > 0; brewTime--)
-                // Loop to print elapsed brew time. 2-4 minutes for green tea
-                for (int brewTime = 120; brewTime > 0; brewTime--)
+              // Loop to print elapsed brew time. 2-4 minutes for green tea
+              for (int brewTime = 120; brewTime > 0; brewTime--)
+              {
+                // count down the brew time in minutes
+                double minutes = brewTime / 60;
+                // Change the type to a string
+                String minute = String(minutes);
+                // Only get the first number from the string (no decimals needed)
+                String newMinute = minute.substring(0, 1);
+                // count down the brew time in seconds
+                int seconds = brewTime % 60;
+                if (seconds % 30 == 0)
                 {
-                  // count down the brew time in minutes
-                  double minutes = brewTime / 60;
-                  // Change the type to a string
-                  String minute = String(minutes);
-                  // Only get the first number from the string (no decimals needed)
-                  String newMinute = minute.substring(0, 1);
-                  // count down the brew time in seconds
-                  int seconds = brewTime % 60;
-                  if (seconds % 30 == 0)
+                  if (seconds / 30 == 0)
                   {
-                    if (seconds / 30 == 0)
-                    {
-                      // add the second zero for better formatting
-                      client.println("<p>" + newMinute + ":" + seconds + "0 <p>");
-                    }
-                    else
-                    {
-                      // print without extra formatting
-                      client.println("<p>" + newMinute + ":" + seconds + "<p>");
-                    }
+                    // add the second zero for better formatting
+                    client.println("<p>" + newMinute + ":" + seconds + "0 <p>");
                   }
-                  delay(1000);
+                  else
+                  {
+                    // print without extra formatting
+                    client.println("<p>" + newMinute + ":" + seconds + "<p>");
+                  }
                 }
+                delay(1000);
+              }
               // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
@@ -230,36 +230,33 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
-
               client.println("<p>Time remaining:</p>");
-              // Loop to print elapsed brew time. 5-7 minutes for herbal tea
-              for (int brewTime = 300; brewTime > 0; brewTime--)
-                // Loop to print elapsed brew time. 2-3 minutes for white tea
-                for (int brewTime = 120; brewTime > 0; brewTime--)
+              // Loop to print elapsed brew time. 2-3 minutes for white tea
+              for (int brewTime = 120; brewTime > 0; brewTime--)
+              {
+                // count down the brew time in minutes
+                double minutes = brewTime / 60;
+                // Change the type to a string
+                String minute = String(minutes);
+                // Only get the first number from the string (no decimals needed)
+                String newMinute = minute.substring(0, 1);
+                // count down the brew time in seconds
+                int seconds = brewTime % 60;
+                if (seconds % 30 == 0)
                 {
-                  // count down the brew time in minutes
-                  double minutes = brewTime / 60;
-                  // Change the type to a string
-                  String minute = String(minutes);
-                  // Only get the first number from the string (no decimals needed)
-                  String newMinute = minute.substring(0, 1);
-                  // count down the brew time in seconds
-                  int seconds = brewTime % 60;
-                  if (seconds % 30 == 0)
+                  if (seconds / 30 == 0)
                   {
-                    if (seconds / 30 == 0)
-                    {
-                      // add the second zero for better formatting
-                      client.println("<p>" + newMinute + ":" + seconds + "0 <p>");
-                    }
-                    else
-                    {
-                      // print without extra formatting
-                      client.println("<p>" + newMinute + ":" + seconds + "<p>");
-                    }
+                    // add the second zero for better formatting
+                    client.println("<p>" + newMinute + ":" + seconds + "0 <p>");
                   }
-                  delay(1000);
+                  else
+                  {
+                    // print without extra formatting
+                    client.println("<p>" + newMinute + ":" + seconds + "<p>");
+                  }
                 }
+                delay(1000);
+              }
               // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
