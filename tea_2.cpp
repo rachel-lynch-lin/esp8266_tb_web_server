@@ -117,6 +117,8 @@ void loop()
             if (header.indexOf("GET /black/on") >= 0)
             {
               outputBState = "on";
+              client.println("<p class='button'>Brewing!</p>");
+              // Loop to move servo
               for (angle = 70; angle > 0; angle--)
               {
                 // sets the servo position according to the angle
@@ -125,6 +127,8 @@ void loop()
                 delay(5);
               }
               client.println("<p class='button'>Brewing!</p>");
+
+              // Loop to print test length of brew time
               for (int brewTime = 10; brewTime > 0; brewTime--)
               {
                 // count down the brew time in seconds
@@ -137,6 +141,8 @@ void loop()
             else if (header.indexOf("GET /black/off") >= 0)
             {
               outputBState = "off";
+
+              // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
                 // sets the servo position according to the angle
@@ -144,8 +150,11 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
+              client.println("<p class='button'>Finished!</p>");
+              outputBState = "off";
             }
-            // Green Tea
+
+                        // Green Tea
             if (header.indexOf("GET /green/on") >= 0)
             {
               outputGState = "on";
