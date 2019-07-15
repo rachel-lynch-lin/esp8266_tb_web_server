@@ -124,6 +124,13 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
+              for (int brewTime = 10; brewTime > 0; brewTime--)
+              {
+                // count down the brew time in seconds
+                client.println(brewTime);
+                delay(1000);
+              }
+              outputBState = "off";
             }
             else if (header.indexOf("GET /black/off") >= 0)
             {
@@ -203,7 +210,6 @@ void loop()
                 delay(5);
               }
             }
-
             if (header.indexOf("GET /exit/on") >= 0)
             {
               outputState = "on";
@@ -216,7 +222,6 @@ void loop()
               outputGState = "off";
               outputHState = "off";
             }
-
             // Display current state, and ON/OFF buttons for black tea
             client.println("<p>Black Tea - State " + outputBState + "</p>");
             // If the outputBState is off, it displays the ON button
@@ -265,15 +270,12 @@ void loop()
             // If the outputState is off, it displays the ON button
             if (outputState == "off")
             {
-              client.println("<p><a href=\"/exit/on\"><button class=\"button\" id=\"exitOn\">EXIT</button></a></p>");
               client.println("<p><a href=\"/exit/on\"><button class=\"button\" id=\"exitOn\">CANCEL</button></a></p>");
             }
             else
             {
-              client.println("<p><a href=\"/exit/off\"><button class=\"button\" id=\"exitOff\">EXIT</button></a></p>");
               client.println("<p><a href=\"/exit/off\"><button class=\"button\" id=\"exitOff\">RESET</button></a></p>");
             }
-
             client.println("</body></html>");
             // The HTTP response ends with another blank line
             client.println();
