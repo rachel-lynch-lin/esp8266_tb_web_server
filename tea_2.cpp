@@ -126,8 +126,6 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
-              client.println("<p class='button'>Brewing!</p>");
-
               // Loop to print test length of brew time
               for (int brewTime = 10; brewTime > 0; brewTime--)
               {
@@ -135,13 +133,6 @@ void loop()
                 client.println(brewTime);
                 delay(1000);
               }
-              outputBState = "off";
-              client.println("<p class='button'>Finished!</p>");
-            }
-            else if (header.indexOf("GET /black/off") >= 0)
-            {
-              outputBState = "off";
-
               // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
@@ -154,10 +145,12 @@ void loop()
               outputBState = "off";
             }
 
-                        // Green Tea
+            // Green Tea
             if (header.indexOf("GET /green/on") >= 0)
             {
               outputGState = "on";
+              client.println("<p class='button'>Brewing!</p>");
+              // Loop to move servo
               for (angle = 70; angle > 0; angle--)
               {
                 // sets the servo position according to the angle
@@ -169,6 +162,16 @@ void loop()
             else if (header.indexOf("GET /green/off") >= 0)
             {
               outputGState = "off";
+
+              // Loop to print test length of brew time
+              for (int brewTime = 10; brewTime > 0; brewTime--)
+              {
+                // count down the brew time in seconds
+                client.println(brewTime);
+                delay(1000);
+              }
+
+              // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
                 // sets the servo position according to the angle
@@ -176,10 +179,15 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
+              client.println("<p class='button'>Finished!</p>");
+              outputGState = "off";
             }
+
             if (header.indexOf("GET /white/on") >= 0)
             {
               outputWState = "on";
+              client.println("<p class='button'>Brewing!</p>");
+              // Loop to move servo
               for (angle = 70; angle > 0; angle--)
               {
                 // sets the servo position according to the angle
@@ -191,6 +199,16 @@ void loop()
             else if (header.indexOf("GET /white/off") >= 0)
             {
               outputWState = "off";
+
+              // Loop to print test length of brew time
+              for (int brewTime = 10; brewTime > 0; brewTime--)
+              {
+                // count down the brew time in seconds
+                client.println(brewTime);
+                delay(1000);
+              }
+
+              // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
                 // sets the servo position according to the angle
@@ -198,10 +216,15 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
+              client.println("<p class='button'>Finished!</p>");
+              outputWState = "off";
             }
+
             if (header.indexOf("GET /herbal/on") >= 0)
             {
               outputHState = "on";
+              client.println("<p class='button'>Brewing!</p>");
+              // Loop to move servo
               for (angle = 70; angle > 0; angle--)
               {
                 // sets the servo position according to the angle
@@ -213,6 +236,16 @@ void loop()
             else if (header.indexOf("GET /herbal/off") >= 0)
             {
               outputHState = "off";
+
+              // Loop to print test length of brew time
+              for (int brewTime = 10; brewTime > 0; brewTime--)
+              {
+                // count down the brew time in seconds
+                client.println(brewTime);
+                delay(1000);
+              }
+
+              // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
                 // sets the servo position according to the angle
@@ -220,7 +253,10 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
+              client.println("<p class='button'>Finished!</p>");
+              outputHState = "off";
             }
+
             if (header.indexOf("GET /exit/on") >= 0)
             {
               outputState = "on";
