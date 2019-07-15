@@ -13,6 +13,7 @@ String header;
 // variables for the servo
 Servo servo;
 int angle = 70;
+
 // Auxiliar variables to store the current output state
 String outputState = "off";
 String outputWState = "off";
@@ -73,7 +74,9 @@ void loop()
             client.println("Content-type:text/html");
             client.println("Connection: close");
             client.println();
+
             // Blink LED to show it is starting
+            // Blink the LED on the board to show it is starting
             digitalWrite(led, LOW);
             delay(100);
             digitalWrite(led, HIGH);
@@ -112,6 +115,8 @@ void loop()
             // Exit Button
             client.println("#exitOn {background-color: #ccc;}");
             client.println("#exitOff {background-color: #eee;}</style></head>");
+            client.println("#herbalOff {background-color: #f8fa78;}</style></head>");
+
             // Web Page Heading
             client.println("<body><h1>T^2 - Tea Brewing Made Easy</h1>");
             if (header.indexOf("GET /black/on") >= 0)
@@ -144,7 +149,6 @@ void loop()
               client.println("<p class='button'>Finished!</p>");
               outputBState = "off";
             }
-
             // Green Tea
             if (header.indexOf("GET /green/on") >= 0)
             {
@@ -158,11 +162,6 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
-            }
-            else if (header.indexOf("GET /green/off") >= 0)
-            {
-              outputGState = "off";
-
               // Loop to print test length of brew time
               for (int brewTime = 10; brewTime > 0; brewTime--)
               {
@@ -170,7 +169,6 @@ void loop()
                 client.println(brewTime);
                 delay(1000);
               }
-
               // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
@@ -182,7 +180,6 @@ void loop()
               client.println("<p class='button'>Finished!</p>");
               outputGState = "off";
             }
-
             if (header.indexOf("GET /white/on") >= 0)
             {
               outputWState = "on";
@@ -195,11 +192,6 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
-            }
-            else if (header.indexOf("GET /white/off") >= 0)
-            {
-              outputWState = "off";
-
               // Loop to print test length of brew time
               for (int brewTime = 10; brewTime > 0; brewTime--)
               {
@@ -207,7 +199,6 @@ void loop()
                 client.println(brewTime);
                 delay(1000);
               }
-
               // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
@@ -219,7 +210,6 @@ void loop()
               client.println("<p class='button'>Finished!</p>");
               outputWState = "off";
             }
-
             if (header.indexOf("GET /herbal/on") >= 0)
             {
               outputHState = "on";
@@ -232,11 +222,6 @@ void loop()
                 // waits for the servo to get there
                 delay(5);
               }
-            }
-            else if (header.indexOf("GET /herbal/off") >= 0)
-            {
-              outputHState = "off";
-
               // Loop to print test length of brew time
               for (int brewTime = 10; brewTime > 0; brewTime--)
               {
@@ -244,7 +229,6 @@ void loop()
                 client.println(brewTime);
                 delay(1000);
               }
-
               // Loop to return the servo motor back to starting position
               for (angle = 0; angle < 70; angle++)
               {
@@ -269,6 +253,7 @@ void loop()
               outputGState = "off";
               outputHState = "off";
             }
+
             // Display current state, and ON/OFF buttons for black tea
             client.println("<p>Black Tea - State " + outputBState + "</p>");
             // If the outputBState is off, it displays the ON button
@@ -312,6 +297,7 @@ void loop()
             {
               client.println("<p><a href=\"/herbal/off\"><button class=\"button\" id=\"herbalOff\">BREWING</button></a></p>");
             }
+
             // Display current state, and ON/OFF buttons for exit button
             client.println("<p>Exit Button - State " + outputState + "</p>");
             // If the outputState is off, it displays the ON button
@@ -323,7 +309,9 @@ void loop()
             {
               client.println("<p><a href=\"/exit/off\"><button class=\"button\" id=\"exitOff\">RESET</button></a></p>");
             }
+
             client.println("</body></html>");
+
             // The HTTP response ends with another blank line
             client.println();
             // Break out of the while loop
